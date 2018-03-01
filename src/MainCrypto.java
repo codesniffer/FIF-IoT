@@ -9,7 +9,7 @@ public class MainCrypto {
         try {
             s = new Scanner(System.in);
 	        while (true) {
-	            System.out.println("Enter Cryptographic Operation: 1. ECC Key Generation 2. ECC Signature");
+	            System.out.println("Enter Cryptographic Operation: 1. ECC Key Generation 2. ECC Signature 3. ECC Integrated Encryption Scheme");
 	            String option = s.nextLine();
 	            if (option.equals("1")) {
 	            	
@@ -17,6 +17,9 @@ public class MainCrypto {
 	            	
 	            } else if (option.equals("2")) {
 	            	Crypto.ECCSignature();
+	            	
+	            }  else if (option.equals("3")) {
+	            	Crypto.ECCIntegratedEncryptionScheme();
 	            }
             }
         } catch (Exception ex) {
