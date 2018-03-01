@@ -10,7 +10,7 @@ public class MainFIFIoT {
         try {
             s = new Scanner(System.in);
 	        while (true) {
-	            System.out.println("Enter Cryptographic Operation: 1. ECC Key Generation 2. ECC Signature 3. ECC Integrated Encryption Scheme 4. SHA256" );
+	            System.out.println("Enter Cryptographic Operation: 1. ECC Key Generation 2. ECC Signature 3. ECC Integrated Encryption Scheme 4. SHA256"  );
 	            String option = s.nextLine();
 	            if (option.equals("1")) {
 	            	
@@ -36,7 +36,7 @@ public class MainFIFIoT {
 	            }  else if (option.equals("3")) {
 	            	Crypto.ECCIntegratedEncryptionScheme();
 	            	
-	            } else if (option.equals("4")) {
+	            }  else if (option.equals("4")) {
 	            	
 	            	int [] payloadSize = {16,32,64,128,256,512,1024};
 	            	for (int i =0; i< payloadSize.length; i++) {
@@ -51,7 +51,7 @@ public class MainFIFIoT {
 	            	     
 		            	System.out.println("[SHA256] [Text Size: " + payloadSize[i] + " Bytes]" + " [Completion Time: " + elapsedTime + " ms]" );
 
-	            	}
+	            	} 
 	            }
             }
         } catch (Exception ex) {
