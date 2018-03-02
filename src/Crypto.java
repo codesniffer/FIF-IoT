@@ -1,3 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author yasser
+ */
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.*;
@@ -9,7 +19,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
+import org.bouncycastle.jce.interfaces.ECPrivateKey;
+import org.bouncycastle.jce.interfaces.ECPublicKey;
+import org.bouncycastle.jce.spec.IESParameterSpec;
+import org.bouncycastle.util.encoders.Hex;
 
 public class Crypto {
 
@@ -159,17 +172,27 @@ public class Crypto {
 		}
 	}
 	
+	/*
+	* 1. Follow this instruction to avoid runtime errors
+	* http://opensourceforgeeks.blogspot.in/2014/09/how-to-install-java-cryptography.html
+	* 2. Copy the following libraries to JDK_HOME/jre/lib/security   JRE_HOME/jre/lib/securiy 
+	* http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+	*/
+	
 	public static void ECCIntegratedEncryptionScheme  (){
 		try {
-			
+			 
+                    //byte[] derivation = Hex.decode("202122232425262728292a2b2c2d2e2f");
+                    //byte[] encoding   = Hex.decode("303132333435363738393a3b3c3d3e3f");
+                    //IESParameterSpec params = new IESParameterSpec(derivation,encoding,128);
 			 Security.addProvider(new BouncyCastleProvider());
-
+                        //Provider SECURITY_PROVIDER = new BouncyCastleProvider();
 		   // KeyPairGenerator ecKeyGen = KeyPairGenerator.getInstance("EC", "SunEC");
 		   // ecKeyGen.initialize(new ECGenParameterSpec("secp192k1"));
 			 
 			 //KeyPairGenerator ecKeyGen = KeyPairGenerator.getInstance("EC", BouncyCastleProvider.PROVIDER_NAME);
 			 
-			 KeyPairGenerator ecKeyGen = KeyPairGenerator.getInstance("EC", "BC");
+			 KeyPairGenerator ecKeyGen = KeyPairGenerator.getInstance("EC","BC");
 			 
 			 ecKeyGen.initialize(new ECGenParameterSpec("brainpoolP384r1"));
 
@@ -178,9 +201,12 @@ public class Crypto {
 		    // ecKeyGen.initialize(new ECGenParameterSpec("secp384r1"));
 
 		    KeyPair ecKeyPair = ecKeyGen.generateKeyPair();
+                    ECPublicKey pub = (ECPublicKey)ecKeyPair.getPublic();
+                    ECPrivateKey priv = (ECPrivateKey)ecKeyPair.getPrivate();
 		    System.out.println("What is slow?");
 
-		    Cipher iesCipher = Cipher.getInstance("ECIESwithAES");
+		    Cipher iesCipher = Cipher.getInstance("ECIESwithDESEDE-CBC","BC");
+                    Cipher iesCipher_2 = Cipher.getInstance("ECIESwithDESEDE-CBC","BC");
 		    
 		   // Cipher iesCipher = Cipher.getInstance("ECIES");
 		    
@@ -188,14 +214,16 @@ public class Crypto {
 		    
 		    String text = "In teaching others we teach ourselves";
 
-		    byte[] ciphertext = iesCipher.doFinal(text.getBytes());
-		    
+		    //System.out.println(text.getBytes());
+                    byte[] ciphertext = iesCipher.doFinal(text.getBytes());
+		    System.out.println("CypherText: 0x" + (new BigInteger(1, text.getBytes()).toString(16)).toUpperCase());
 		    System.out.println("CypherText: 0x" + (new BigInteger(1, ciphertext).toString(16)).toUpperCase());
 
-		    iesCipher.init(Cipher.DECRYPT_MODE, ecKeyPair.getPrivate());
+		    iesCipher_2.init(Cipher.DECRYPT_MODE, priv, iesCipher.getParameters());
 		    byte[] plaintext = iesCipher.doFinal(ciphertext);
 		    
-		    System.out.println("PlainText: 0x" + (new BigInteger(1, plaintext).toString(16)).toUpperCase());
+		    System.out.println(plaintext);
+                    System.out.println("PlainText: 0x" + (new BigInteger(1, plaintext).toString(16)).toUpperCase());
 
 
 		    //System.out.println( Hex.toHexString(ciphertext));
