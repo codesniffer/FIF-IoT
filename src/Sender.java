@@ -55,7 +55,7 @@ class Sender{
 
                 long estimatedTime = System.nanoTime() - startTime;
 
-                System.out.println("Response from Server: " + response +"; Time to receive: " + (int) (estimatedTime / 1000000) + " ms");
+                System.out.println("Response from Server: " + response +"; Time to receive: " + estimatedTime + " ns");
 
             } catch (IOException e) {
                 e.printStackTrace();

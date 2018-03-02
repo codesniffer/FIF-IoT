@@ -10,10 +10,15 @@ public class MainSender {
 
         try {
             s = new Scanner(System.in);
+            
+            System.out.println("Enter IP address");
+            String serverIP = s.nextLine();
 	        while (true) {
-	            System.out.println("Enter IP address");
-	            String serverIP = s.nextLine();
-	            new Sender().sendData(serverIP, 80, 320);
+	           
+	            
+	            System.out.println("Enter message length");
+	            int messageLent = s.nextInt();
+	            new Sender().sendData(serverIP, 80, messageLent);
 	            System.out.println(serverIP);
             }
         } catch (Exception ex) {

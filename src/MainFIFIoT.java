@@ -23,12 +23,12 @@ public class MainFIFIoT {
 	            		for (int j =0; j<payloadSize[i];j++ )
 	            			c[j] = 'A';
 	            		String plainText = Arrays.toString(c);
-	            		long startTime = System.currentTimeMillis();
+	            		long startTime = System.nanoTime();
 	            		Crypto.ECCSignatureWithInput(plainText);
-	            		 long stopTime = System.currentTimeMillis();
+	            		 long stopTime = System.nanoTime();
 	            	     long elapsedTime = stopTime - startTime;
 	            	     
-		            	 System.out.println("[ECDSA] [Text Size: " + payloadSize[i] + " Bytes]" + " [Completion Time: " + elapsedTime + " ms]" );
+		            	 System.out.println("[ECDSA] [Text Size: " + payloadSize[i] + " Bytes]" + " [Completion Time: " + elapsedTime + " ns]" );
 
 	            	}
 	            	
@@ -44,12 +44,12 @@ public class MainFIFIoT {
 	            		for (int j =0; j<payloadSize[i];j++ )
 	            			c[j] = 'A';
 	            		String plainText = Arrays.toString(c);
-	            		long startTime = System.currentTimeMillis();
+	            		long startTime = System.nanoTime();
 	            		Crypto.HashSHA256(plainText);
-	            		long stopTime = System.currentTimeMillis();
+	            		long stopTime = System.nanoTime();
 	            	    long elapsedTime = stopTime - startTime;
 	            	     
-		            	System.out.println("[SHA256] [Text Size: " + payloadSize[i] + " Bytes]" + " [Completion Time: " + elapsedTime + " ms]" );
+		            	System.out.println("[SHA256] [Text Size: " + payloadSize[i] + " Bytes]" + " [Completion Time: " + elapsedTime + " ns]" );
 
 	            	} 
 	            }
